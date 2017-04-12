@@ -2,8 +2,13 @@
     <string name="app_name">dagger2</string>
     <string name="username">username</string>
     <string name="default_lavel">0</string>
-    <string name="loading">Loading</string>
+    <string name="loading">Loading …</string>
     <string name="list_error">Se ha producido un error al cargar la lista</string>
     <string name="no_internet">No internet available</string>
     <string name="user_greetings">Hello i am</string>
+    <string name="user_greetings_email">My email</string>
+    <string name="user_detail_email">Email</string>
+    <string name="user_detail_address">Address</string>
+    <string name="user_detail_id">User ID</string>
+    <string name="error_loading_user">Se ha producido un error cargando al usuario</string>
 </resources>

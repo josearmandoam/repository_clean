@@ -1,13 +1,12 @@
 package com.example.jose.dagger2.ui.activity;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.jose.dagger2.R;
 import com.example.jose.dagger2.global.App;
@@ -19,19 +18,20 @@ import com.example.jose.dagger2.interactor.GetUsersInteractor;
 import com.example.jose.dagger2.ui.adaptor.RecyclerAdapter;
 import com.example.jose.dagger2.ui.presenter.UserListPresenter;
 import com.example.jose.dagger2.ui.presenter.abs.AbsUserListPresenter;
+import com.example.jose.dagger2.usecase.ShowNoInternetAvailable;
 import com.example.jose.dagger2.usecase.ShowUserGreetings;
+import com.example.jose.dagger2.usecase.ShowUserListError;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class UserListActivity extends AppCompatActivity implements AbsUserListPresenter.View, AbsUserListPresenter.Navigator {
+public class UserListActivity extends BaseActivity implements AbsUserListPresenter.View, AbsUserListPresenter.Navigator {
 
-    @InjectView(R.id.user_detail_users_list)
+    @InjectView(R.id.user_list_users_list)
     RecyclerView recyclerView;
 
     UserListComponent component;
@@ -40,7 +40,7 @@ public class UserListActivity extends AppCompatActivity implements AbsUserListPr
 
     AbsUserListPresenter presenter;
 
-    @InjectView(R.id.user_detail_progressbar)
+    @InjectView(R.id.user_list_progressbar)
     ProgressBar pbr;
 
     @Inject
@@ -49,32 +49,48 @@ public class UserListActivity extends AppCompatActivity implements AbsUserListPr
     @Inject
     GetUsersInteractor interactor;
 
+    @Inject
+    ShowUserListError showUserListError;
+
+    @Inject
+    ShowNoInternetAvailable showNoInternetAvailable;
+
+    RecyclerAdapter.OnUserClicked mUserClickedListener = new RecyclerAdapter.OnUserClicked() {
+        @Override
+        public void onPictureClicked(User user) {
+            presenter.onPicturedClicked(user);
+        }
+
+        @Override
+        public void onBackgroundClicked(User user) {
+            presenter.onBackgroundClicked(user);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         component().inject(this);
-        ButterKnife.inject(this);
 
         presenter = new UserListPresenter(this, interactor);
         presenter.setView(this);
         presenter.setNavigator(this);
         presenter.initialize();
+    }
 
-        initializeRecyclerView();
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_users_list;
     }
 
     private void initializeRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerAdapter = new RecyclerAdapter(this, list);
+        recyclerAdapter = new RecyclerAdapter(this, list, mUserClickedListener);
+        recyclerView.setAdapter(recyclerAdapter);
     }
 
-    private int getLayoutId() {
-        return R.layout.activity_main;
-    }
 
-    public UserListComponent component() {
+    private UserListComponent component() {
         if (component == null) {
             component = DaggerUserListComponent.builder()
                     .rootComponent(((App) getApplication()).getComponent())
@@ -90,17 +106,17 @@ public class UserListActivity extends AppCompatActivity implements AbsUserListPr
         for (User u : users) {
             list.add(u);
         }
-        recyclerAdapter.notifyDataSetChanged();
+        initializeRecyclerView();
     }
 
     @Override
     public void showUserListError(Exception e) {
-        Toast.makeText(this, R.string.list_error, Toast.LENGTH_SHORT).show();
+        showUserListError.show();
     }
 
     @Override
     public void showNoInternetAvailable() {
-        Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
+        showNoInternetAvailable.show();
     }
 
     @Override
@@ -124,8 +140,8 @@ public class UserListActivity extends AppCompatActivity implements AbsUserListPr
     }
 
     public static void open(Context ctx, User user) {
-//        Intent intent = new Intent(ctx, aa.class);
-//        intent.putExtra("user", (Parcelable) user);
-//        ctx.startActivity(intent);
+        Intent intent = new Intent(ctx, UserDetailActivity.class);
+        intent.putExtra("userId", user);
+        ctx.startActivity(intent);
     }
 }

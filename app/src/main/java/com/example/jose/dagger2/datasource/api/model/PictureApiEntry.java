@@ -7,7 +7,7 @@ package com.example.jose.dagger2.datasource.api.model;
 public class PictureApiEntry {
     String large;
     String medium;
-    String thumnbnail;
+    String thumbnail;
 
     public String getLarge() {
         return large;
@@ -17,7 +17,7 @@ public class PictureApiEntry {
         return medium;
     }
 
-    public String getThumnbnail() {
-        return thumnbnail;
+    public String getThumbnail() {
+        return thumbnail;
     }
 }

@@ -21,11 +21,14 @@ public class MainModule {
 
     public MainModule(App app) {
         this.app = app;
-        interactor=new GetUsersInteractor(new GetUsersApiImp(10,0),
+        interactor = new GetUsersInteractor(new GetUsersApiImp(10, 0),
                 new ThreadExecutor(),
                 new MainThreadImp());
     }
+
     @Provides
-    public GetUsersInteractor provideGetUsersInteractor() { return interactor; }
+    public GetUsersInteractor provideGetUsersInteractor() {
+        return interactor;
+    }
 
 }

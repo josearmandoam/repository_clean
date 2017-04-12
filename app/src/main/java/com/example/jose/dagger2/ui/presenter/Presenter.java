@@ -1,7 +1,5 @@
 package com.example.jose.dagger2.ui.presenter;
 
-import android.view.View;
-
 /**
  * Created by jose on 10/04/2017.
  */

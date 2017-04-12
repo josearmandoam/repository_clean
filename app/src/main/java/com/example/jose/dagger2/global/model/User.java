@@ -1,10 +1,12 @@
 package com.example.jose.dagger2.global.model;
 
+import java.io.Serializable;
+
 /**
  * Created by jose on 08/04/2017.
  */
 
-public class User {
+public class User implements Serializable {
     protected String id;
     protected String name;
     protected String username;

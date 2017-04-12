@@ -11,6 +11,7 @@
     cardview:cardUseCompatPadding="true"
     >
     <RelativeLayout
+        android:id="@+id/user_list_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <ImageView

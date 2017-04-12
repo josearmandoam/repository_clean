@@ -21,18 +21,19 @@ public class ThreadExecutor implements Executor {
 
     private ThreadPoolExecutor threadPoolExecutor;
 
-    public ThreadExecutor(){
+    public ThreadExecutor() {
         int corePoolSize = CORE_POOL_SIZE;
         int maxPoolSize = MAX_POOL_SIZE;
         int keepAliveTime = KEEP_ALIVE_TIME;
         TimeUnit timeUnit = TIME_UNIT;
         BlockingQueue<Runnable> workQueue = WORK_QUEUE;
 
-        threadPoolExecutor=new ThreadPoolExecutor(corePoolSize,maxPoolSize,keepAliveTime,timeUnit,workQueue);
+        threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAliveTime, timeUnit, workQueue);
     }
+
     @Override
     public void run(final Interactor interactor) {
-        if (interactor !=null){
+        if (interactor == null) {
             throw new IllegalArgumentException("Interactor to execute can not be null");
         }
         threadPoolExecutor.submit(new Runnable() {

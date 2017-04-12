@@ -33,15 +33,15 @@ public class GetUsersInteractor implements Interactor, GetUsers, GetUsers.Listen
 
     @Override
     public void getUsers(Listener listener) {
-        if(listener!=null){
-            this.listener=listener;
+        if (listener != null) {
+            this.listener = listener;
         }
         this.executor.run(this);
     }
 
     @Override
     public void onUsersReceived(List<User> users, boolean isCached) {
-        listener.onUsersReceived(users,isCached);
+        listener.onUsersReceived(users, isCached);
     }
 
     @Override

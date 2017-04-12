@@ -3,4 +3,5 @@
     <dimen name="user_list_margin_left">5dp</dimen>
     <dimen name="user_list_margin_top">10dp</dimen>
     <dimen name="default_margin_top">10dp</dimen>
+    <dimen name="user_detail_margin_top">10dp</dimen>
 </resources>

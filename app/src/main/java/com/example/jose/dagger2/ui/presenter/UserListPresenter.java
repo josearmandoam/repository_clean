@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.example.jose.dagger2.global.App;
 import com.example.jose.dagger2.global.di.RootComponent;
-import com.example.jose.dagger2.global.di.UserListComponent;
 import com.example.jose.dagger2.global.model.User;
 import com.example.jose.dagger2.interactor.GetUsersInteractor;
 import com.example.jose.dagger2.ui.presenter.abs.AbsUserListPresenter;
@@ -69,8 +68,9 @@ public class UserListPresenter extends AbsUserListPresenter {
     public void destroy() {
 
     }
+
     protected RootComponent getComponent() {
-            return ((App)ctx.getApplicationContext()).getComponent();
+        return ((App) ctx.getApplicationContext()).getComponent();
     }
 
     @Override

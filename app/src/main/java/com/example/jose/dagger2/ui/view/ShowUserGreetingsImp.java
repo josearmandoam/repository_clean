@@ -20,6 +20,8 @@ public class ShowUserGreetingsImp implements ShowUserGreetings {
 
     @Override
     public void show(User user) {
-        Toast.makeText(context, R.string.user_greetings+" "+user.getUsername(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getResources().getString(R.string.user_greetings) + " " + user.getName()
+                        + "\n" + context.getResources().getString(R.string.user_greetings_email) + user.getEmail(),
+                Toast.LENGTH_SHORT).show();
     }
 }

@@ -14,12 +14,10 @@ public class App extends Application {
     private MainModule mainModule;
     RootComponent component;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
         initializeDependencyInjector();
-
     }
 
     private void initializeDependencyInjector() {
